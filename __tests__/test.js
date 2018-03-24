@@ -1,6 +1,6 @@
 'use strict';
 
-const Log = require('./index.js');
+const Log = require('../index.js');
 
 Log.info('testing \u001B[31mtesting\u001b[39mend');
 Log.info('testing new thing # yay # and no # end in sight', 'steven', 'foo');
