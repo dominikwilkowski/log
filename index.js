@@ -303,7 +303,7 @@ const Log = {
 		error: ` 🔥  ERROR: `,
 		info: ` 🔔  INFO: `,
 		ok: ` 👍  `,
-		done: ` 🚀  DONE `,
+		done: ` 🚀  DONE: `,
 		time: ` 🕐  [${ Style.bold('#timestamp#') }] `,
 		verbose: ` 😬  VERBOSE: `,
 	},
@@ -319,6 +319,7 @@ const Log = {
 	ok:      ( text /*: string */, ...vars ) /*: void */ => console.log( Style.green( Output( 'ok', text, vars ) ) ),
 	done:    ( text /*: string */, ...vars ) /*: void */ => console.log( Style.green( Output( 'done', text, vars ) ) ),
 	time:    ( text /*: string */, ...vars ) /*: void */ => console.log( Output( 'time', text, vars ) ),
+	hr:      () /*: void */                              => console.log(`\n ${ Style.gray( '═'.repeat( Size().width - 2 ) ) } \n`),
 	verbose: ( text /*: string */, ...vars ) /*: void */ => {
 		const output = Output( 'verbose', text, vars );
 

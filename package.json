@@ -1,5 +1,5 @@
 {
-	"name": "log",
+	"name": "indent-log",
 	"description": "Better logging for your node app",
 	"version": "0.1.0",
 	"author": {

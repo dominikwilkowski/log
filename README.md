@@ -3,6 +3,8 @@ LOG [![Build Status](https://travis-ci.org/dominikwilkowski/log.svg?branch=maste
 
 > Better logging for your node app
 
+![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/master/assets/log.png)
+
 
 ## Contents
 
@@ -22,7 +24,7 @@ LOG [![Build Status](https://travis-ci.org/dominikwilkowski/log.svg?branch=maste
 
 
 ```shell
-TODO
+npm install indent-log
 ```
 
 
@@ -37,7 +39,7 @@ TODO
 Run the logger via:
 
 ```js
-const Log = require('TODO');
+const Log = require('indent-log');
 
 Log.banner( 'My app started' );
 Log.info( 'Server running at #', IPandPort );
@@ -48,22 +50,20 @@ Log.info( 'Server running at #', IPandPort );
 
 You got a bunch of logs to chose from:
 
-```shell
- 📣           Banner log
-
- 👍           Ok log
-
- 🔥  ERROR:   Error log
-
- 🔔  INFO:    Info log
-
- 🚀  DONE     Done log
-
- 😬  VERBOSE: Verbose log
-
- 🕐  [Sat Mar 24 2018 23:13:19 GMT+1100 (AEDT)]
-Time log
+```js
+Log.banner('Banner log');
+Log.ok('Ok log');
+Log.error('Error log');
+Log.info('Info log');
+Log.done('Done log');
+Log.verbose('Verbose log');
+Log.hr();
+Log.time('Time log');
 ```
+
+![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/master/assets/log7.png)
+
+`Log.hr()` will output a line that will fill the terminal and a line break before and after.
 
 
 ### Variables
@@ -73,14 +73,13 @@ the variables will be appended at the end:
 
 ```js
 Log.info( 'running function in folder # to find #', 'folder', 'needle' );
-//  🔔  INFO:  running function in folder "folder" to find "needle"
 
 Log.info( 'running function in folder # to find #', 'folder' );
-//  🔔  INFO:  running function in folder "folder" to find #
 
 Log.info( 'running function in folder # to find #', 'folder', 'needle', 42, [ 'one', 'two' ] );
-//  🔔  INFO:  running function in folder "folder" to find "needle" 42,["one","two"]
 ```
+
+![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/master/assets/log2.png)
 
 All variables are colored yellow to make reading easier.
 
@@ -89,11 +88,14 @@ All variables are colored yellow to make reading easier.
 
 Logs that run over the space you have in your terminal will automatically indent on the next line:
 
+```js
+Log.info('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
+	'Ut enim ad minim veniam, quis nostrud exercitation\nullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in ' +
+	'reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in ' +
+	'culpa qui officia deserunt mollit anim id est laborum.');
 ```
-🔔  INFO: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do "var!"
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation.
-```
+
+![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/master/assets/log3.png)
 
 This can be disabled in the [`disableIndent`](#disableindent) setting.
 
@@ -115,9 +117,9 @@ Log.monkey = ( text, ...vars ) => console.log( Log.Style.magenta( Log.Output( 'm
 
 Log.banner('Monkey business starting now!');
 Log.monkey('Hey hey!!!');
- // 📣                   Monkey business starting now!
- // 🐒  monkey business: Hey hey!!!
 ```
+
+![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/master/assets/log4.png)
 
 Registering a new flag will now ensure all other flags are indented to the largest flag unless it is disabled via the [`disableIndent`](#disableindent) setting.
 
@@ -139,7 +141,7 @@ Log.pretty = true;
 An example would be:
 
 ```js
-const Log = require('TODO');
+const Log = require('indent-log');
 
 if( process.argv.includes('-v') || process.argv.includes('--verbose') ) {
 	Log.verboseMode = true;
@@ -170,6 +172,29 @@ If you want to filter all messages that begin with `bar` you’d use:
 Log.verboseFilter = '^bar';
 ```
 
+An example script for your cli app would be:
+
+```js
+if( process.argv.includes('-v') || process.argv.includes('--verbose') ) {
+	Log.verboseMode = true;
+
+	const flagParam = ( process.argv.indexOf('-v') !== -1 ? process.argv.indexOf('-v') : process.argv.indexOf('--verbose') ) + 1;
+	const verboseFilter = process.argv[ flagParam ] && process.argv[ flagParam ].startsWith('-') ? undefined : process.argv[ flagParam ];
+
+	if( verboseFilter ) {
+		Log.verboseFilter = verboseFilter;
+	}
+}
+```
+
+Now the user can use your app with an optional filter like:
+
+```shell
+yourapp -v onlythisstring
+```
+
+And Log will filter by this word.
+
 
 ### `disableIndent`
 _(array)_  
@@ -178,28 +203,33 @@ default: `[ 'time' ]`
 All messages are indented by the largest flag of all types. You can disable a particular type if that type has a very large flag that would make indentation
 of all other look ridicules. Below is what it looks like by default because the type `time` has it's indent disabled.
 
+```js
+Log.banner('Banner log');
+Log.ok('Ok log');
+Log.error('Error log');
+Log.info('Info log');
+Log.done('Done log');
+Log.verbose('Verbose log');
+Log.time('Time log');
 ```
- 📣           Banner log
- 👍           Ok log
- 🔥  ERROR:   Error log
- 🔔  INFO:    Info log
- 🚀  DONE     Done log
- 😬  VERBOSE: Verbose log
- 🕐  [Sat Mar 24 2018 23:13:19 GMT+1100 (AEDT)]
-time
-```
+
+![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/master/assets/log5.png)
 
 This is what it would look like if you enabled all indentation and included `time`:
 
+```js
+Log.disableIndent = [];
+
+Log.banner('Banner log');
+Log.ok('Ok log');
+Log.error('Error log');
+Log.info('Info log');
+Log.done('Done log');
+Log.verbose('Verbose log');
+Log.time('Time log');
 ```
- 📣                                             Banner log
- 👍                                             Ok log
- 🔥  ERROR:                                     Error log
- 🔔  INFO:                                      Info log
- 🚀  DONE                                       Done log
- 😬  VERBOSE:                                   Verbose log
- 🕐  [Sun Mar 25 2018 11:33:18 GMT+1100 (AEDT)] Time log
-```
+
+![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/master/assets/log6.png)
 
 Enabled:
 ```
@@ -248,14 +278,16 @@ _(object)_
 
 The flags are the strings shown in front of each message. The defaults are:
 
-```
-banner: ` 📣  `,
-error: ` 🔥  ERROR: `,
-info: ` 🔔  INFO: `,
-ok: ` 👍  `,
-done: ` 🚀  DONE `,
-time: ` 🕐  [${ Style.bold('#timestamp#') }]`,
-verbose: ` 😬  VERBOSE: `,
+```js
+Log.flags = {
+	banner: ` 📣  `,
+	error: ` 🔥  ERROR: `,
+	info: ` 🔔  INFO: `,
+	ok: ` 👍  `,
+	done: ` 🚀  DONE: `,
+	time: ` 🕐  [${ Log.Style.bold('#timestamp#') }]`,
+	verbose: ` 😬  VERBOSE: `,
+};
 ```
 
 The string `#timestamp#` is replaced with the current timestamp.
