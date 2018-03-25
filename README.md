@@ -293,6 +293,10 @@ Log.flags = {
 
 The string `#timestamp#` is replaced with the current timestamp.
 
+Do note that emojis in node have a very complex way of aligning in the character set. Make sure you either use them consistently or not at all. Calculating
+the length of a string that contains emojis is difficult and would warrant a dependency like [grapheme-splitter](https://github.com/orling/grapheme-splitter).
+I am trying to keep this package dependency free though.
+
 
 **[⬆ back to top](#contents)**
 
