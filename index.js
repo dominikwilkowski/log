@@ -22,8 +22,8 @@ const OS = require('os');
  * @return {object} - An object with width and height
  */
 const Size = () => {
-	let width = 0;
-	let height = 0;
+	let width;
+	let height;
 
 	if( TTY.isatty( 1 ) ) {
 		if( process.stdout.getWindowSize ) {
@@ -58,8 +58,8 @@ const Size = () => {
 	}
 
 	return {
-		height: height,
-		width: width,
+		height: height || 0,
+		width: width || 0,
 	};
 };
 
