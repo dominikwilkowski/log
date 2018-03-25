@@ -89,10 +89,11 @@ All variables are colored yellow to make reading easier.
 Logs that run over the space you have in your terminal will automatically indent on the next line:
 
 ```js
-Log.info('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
-	'Ut enim ad minim veniam, quis nostrud exercitation\nullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in ' +
-	'reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in ' +
-	'culpa qui officia deserunt mollit anim id est laborum.');
+Log.info('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ' +
+'ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation\nullamco laboris ' +
+'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit ' +
+'esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in ' +
+'culpa qui officia deserunt mollit anim id est laborum.');
 ```
 
 ![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/master/assets/log3.png)
@@ -291,6 +292,10 @@ Log.flags = {
 ```
 
 The string `#timestamp#` is replaced with the current timestamp.
+
+Do note that emojis in node have a very complex way of aligning in the character set. Make sure you either use them consistently or not at all. Calculating
+the length of a string that contains emojis is difficult and would warrant a dependency like [grapheme-splitter](https://github.com/orling/grapheme-splitter).
+I am trying to keep this package dependency free though.
 
 
 **[⬆ back to top](#contents)**

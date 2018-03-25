@@ -10,7 +10,7 @@ Log.error('look at this object # eh?!', { thing: 'wow', more: { evenmore: [{tots
 Log.pretty = true;
 Log.error('look at this object # eh?!', { thing: 'wow', more: { evenmore: [{tots:'wow'}]}});
 
-console.log('------------');
+Log.hr();
 
 Log.banner('banner');
 Log.error('error');
@@ -26,7 +26,7 @@ Log.verbose('verbose');
 Log.verboseMode = true;
 Log.verbose('verbose');
 
-console.log('------------');
+Log.hr();
 
 Log.info('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do # eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
 	' Ut enim ad minim veniam, quis nostrud exercitation\nullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in' +
@@ -50,7 +50,7 @@ Log.time('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do # eiu
 
 setTimeout(() => Log.time('time2'), 1000);
 
-console.log('------------');
+Log.hr();
 
 Log.verboseFilter = 'stuff';
 Log.verbose('banner');
@@ -62,7 +62,7 @@ Log.verbose('dontshow');
 Log.verboseFilter = '';
 Log.verbose('doshow');
 
-console.log('------------');
+Log.hr();
 
 
 Log.flags.monkey = ' 🐒  monkey business: ';
@@ -72,7 +72,7 @@ Log.monkey = ( text, ...vars ) => console.log( Log.Style.magenta( Log.Output( 'm
 Log.banner('Monkey business starting now!');
 Log.monkey('Hey hey!!!');
 
-console.log('------------');
+Log.hr();
 
 Log.disableIndent = [];
 

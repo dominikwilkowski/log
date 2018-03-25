@@ -83,3 +83,16 @@ test('Log.time - should log its message', () => {
 	expect( Style.strip( console.log.mock.calls[0][0] ).endsWith('test') ).toBeTruthy();
 	expect( Style.strip( console.log.mock.calls[1][0] ).endsWith('test2') ).toBeTruthy();
 });
+
+
+test('Log.hr - should log a long line', () => {
+	console.log = jest.fn();
+
+	Log.hr( 10 );
+
+	expect( console.log.mock.calls.length ).toBe( 1 );
+
+	expect( Style.strip( console.log.mock.calls[0][0] ).startsWith('\n ') ).toBeTruthy();
+	expect( Style.strip( console.log.mock.calls[0][0] ).endsWith(' \n') ).toBeTruthy();
+	expect( Style.strip( console.log.mock.calls[0][0] ) ).toBe('\n ════════ \n');
+});
