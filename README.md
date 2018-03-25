@@ -1,7 +1,7 @@
 LOG [![Build Status](https://travis-ci.org/dominikwilkowski/log.svg?branch=master)](https://travis-ci.org/dominikwilkowski/log)
 ===
 
-> Better logging for your node app
+> No dependency better logging for your node app
 
 ![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/master/assets/log.png)
 
