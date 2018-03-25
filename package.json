@@ -1,0 +1,72 @@
+{
+	"name": "indent-log",
+	"description": "Better logging for your node app",
+	"version": "0.1.0",
+	"author": {
+		"name": "Dominik Wilkowski",
+		"email": "Hi@Dominik-Wilkowski.com",
+		"url": "https://dominik-wilkowski.com/"
+	},
+	"contributors": [
+		{
+			"name": "Dominik Wilkowski",
+			"email": "Hi@Dominik-Wilkowski.com",
+			"url": "https://dominik-wilkowski.com/"
+		}
+	],
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/dominikwilkowski/log.git"
+	},
+	"bugs": {
+		"url": "https://github.com/dominikwilkowski/log/issues"
+	},
+	"licenses": [
+		{
+			"type": "GPL-3.0",
+			"url": "https://github.com/dominikwilkowski/log/blob/master/LICENSE"
+		}
+	],
+	"engines": {
+		"node": ">=6"
+	},
+	"scripts": {
+		"prepublish": "npm run test",
+		"test:watch": "jest --watchAll --coverage",
+		"test": "jest"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"jest-cli": "^22.4.3"
+	},
+	"jest": {
+		"testEnvironment": "node",
+		"testRegex": "\\.spec.js$",
+		"collectCoverageFrom": [
+			"*.js"
+		],
+		"coverageThreshold": {
+			"global": {
+				"branches": 0,
+				"functions": 0,
+				"lines": 0,
+				"statements": 0
+			}
+		}
+	},
+	"keywords": [
+		"CLI",
+		"pretty",
+		"logging",
+		"log",
+		"console",
+		"terminal",
+		"verbose",
+		"ansi"
+	],
+	"files": [
+		"index.js"
+	],
+	"main": "index.js",
+	"license": "GPL-3.0"
+}

@@ -1,0 +1,10 @@
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+.idea
+node_modules
+.sass-cache
+validation-report.json
+validation-status.json
+npm-debug.log
+coverage
