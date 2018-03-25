@@ -192,7 +192,7 @@ const LargestFlag = ( flags /*: object */ = Log.flags ) /*: integer */ => Object
  *
  * @param  {string}  text     - The text to be indented
  * @param  {string}  type     - The type of message
- * @param  {integer} maxWidth - The width of the terminal, default: Size().width
+ * @param  {integer} maxWidth - The width of the terminal window, default: Size().width
  *
  * @return {string}           - The message nicely indented
  */
@@ -264,21 +264,24 @@ const Filter = ( text /*: string */, filter /*: string */ = Log.verboseFilter ) 
 /**
  * Format a message by type
  *
- * @param  {string} type - The type of message
- * @param  {string} text - The message
- * @param  {array}  vars - All variables to be placed into the message
+ * @param  {string}  type     - The type of message
+ * @param  {string}  text     - The message
+ * @param  {array}   vars     - All variables to be placed into the message
+ * @param  {integer} maxWidth - The width of the terminal window, default: Size().width
  *
- * @return {string}      - The formated message with vars and indentation
+ * @return {string}           - The formated message with vars and indentation
  */
-const Output = ( type /*: string */, text /*: string */, vars /*: array */ ) /*: string */ => {
+const Output = ( type /*: string */, text /*: string */, vars /*: array */, maxWidth /*: integer */ = Size().width ) /*: string */ => {
 	if( typeof Log.flags[ type ] === 'undefined' ) {
-		Log.error( `Type was not recognized. Can only be one of:\n#`, Object.keys( Log.flags ) );
-		process.exit( 1 );
+		console.error(
+			Style.red(`Error: Type ${ Style.yellow( type ) } was not recognized. Can only be one of:\n${ Style.yellow( [ 'hr', ...Object.keys( Log.flags ) ] ) }`)
+		);
+		return void( 0 );
 	}
 	else {
 		const shoulder = Shoulder( type );
 		const linebreak = Log.disableIndent.includes( type ) ? '\n' : '';
-		const message = IndentNewLines( InsertVars( text, vars ), type );
+		const message = IndentNewLines( InsertVars( text, vars ), type, maxWidth );
 
 		return `${ shoulder }${ linebreak }${ message }`;
 	}
@@ -319,7 +322,8 @@ const Log = {
 	ok:      ( text /*: string */, ...vars ) /*: void */ => console.log( Style.green( Output( 'ok', text, vars ) ) ),
 	done:    ( text /*: string */, ...vars ) /*: void */ => console.log( Style.green( Output( 'done', text, vars ) ) ),
 	time:    ( text /*: string */, ...vars ) /*: void */ => console.log( Output( 'time', text, vars ) ),
-	hr:      () /*: void */                              => console.log(`\n ${ Style.gray( '═'.repeat( Size().width - 2 ) ) } \n`),
+	hr:      ( maxWidth /*: integer */ = Size().width ) /*: void */ =>
+		console.log(`\n ${ Style.gray( '═'.repeat( maxWidth > 1 ? maxWidth - 2 : 0 ) ) } \n`),
 	verbose: ( text /*: string */, ...vars ) /*: void */ => {
 		const output = Output( 'verbose', text, vars );
 
