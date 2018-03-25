@@ -1,4 +1,4 @@
-LOG
+LOG [![Build Status](https://travis-ci.org/dominikwilkowski/log.svg?branch=master)](https://travis-ci.org/dominikwilkowski/log)
 ===
 
 > Better logging for your node app
