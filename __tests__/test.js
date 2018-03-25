@@ -69,6 +69,7 @@ Log.flags.monkey = ' 🐒  monkey business: ';
 
 Log.monkey = ( text, ...vars ) => console.log( Log.Style.magenta( Log.Output( 'monkey', text, vars ) ) ),
 
+Log.banner('Monkey business starting now!');
 Log.monkey('Hey hey!!!');
 
 console.log('------------');

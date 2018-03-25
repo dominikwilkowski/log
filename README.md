@@ -43,6 +43,31 @@ Log.banner( 'My app started' );
 Log.info( 'Server running at #', IPandPort );
 ```
 
+
+### Vocabulary
+
+You got a bunch of logs to chose from:
+
+```shell
+ 📣           Banner log
+
+ 👍           Ok log
+
+ 🔥  ERROR:   Error log
+
+ 🔔  INFO:    Info log
+
+ 🚀  DONE     Done log
+
+ 😬  VERBOSE: Verbose log
+
+ 🕐  [Sat Mar 24 2018 23:13:19 GMT+1100 (AEDT)]
+Time log
+```
+
+
+### Variables
+
 You can add variables by adding them as arguments. Each placeholder `#` will be replaced one by one with those variables. If you don’t have enough placeholder
 the variables will be appended at the end:
 
@@ -57,24 +82,20 @@ Log.info( 'running function in folder # to find #', 'folder', 'needle', 42, [ 'o
 //  🔔  INFO:  running function in folder "folder" to find "needle" 42,["one","two"]
 ```
 
-You got a bunch of logs to chose from:
+All variables are colored yellow to make reading easier.
 
-```shell
- 📣           Banner log
 
- 🔥  ERROR:   Error log
+### Indentation
 
- 🔔  INFO:    Info log
+Logs that run over the space you have in your terminal will automatically indent on the next line:
 
- 👍           Ok log
-
- 🚀  DONE     Done log
-
- 😬  VERBOSE: Verbose log
-
- 🕐  [Sat Mar 24 2018 23:13:19 GMT+1100 (AEDT)]
-Time log
 ```
+🔔  INFO: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do "var!"
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+          veniam, quis nostrud exercitation.
+```
+
+This can be disabled in the [`disableIndent`](#disableindent) setting.
 
 
 **[⬆ back to top](#contents)**
@@ -92,7 +113,10 @@ Log.flags.monkey = ' 🐒  monkey business: ';
 
 Log.monkey = ( text, ...vars ) => console.log( Log.Style.magenta( Log.Output( 'monkey', text, vars ) ) ),
 
+Log.banner('Monkey business starting now!');
 Log.monkey('Hey hey!!!');
+ // 📣                   Monkey business starting now!
+ // 🐒  monkey business: Hey hey!!!
 ```
 
 Registering a new flag will now ensure all other flags are indented to the largest flag unless it is disabled via the [`disableIndent`](#disableindent) setting.
@@ -154,11 +178,11 @@ default: `[ 'time' ]`
 All messages are indented by the largest flag of all types. You can disable a particular type if that type has a very large flag that would make indentation
 of all other look ridicules. Below is what it looks like by default because the type `time` has it's indent disabled.
 
-```shell
+```
  📣           Banner log
+ 👍           Ok log
  🔥  ERROR:   Error log
  🔔  INFO:    Info log
- 👍           Ok log
  🚀  DONE     Done log
  😬  VERBOSE: Verbose log
  🕐  [Sat Mar 24 2018 23:13:19 GMT+1100 (AEDT)]
@@ -167,11 +191,11 @@ time
 
 This is what it would look like if you enabled all indentation and included `time`:
 
-```shell
+```
  📣                                             Banner log
+ 👍                                             Ok log
  🔥  ERROR:                                     Error log
  🔔  INFO:                                      Info log
- 👍                                             Ok log
  🚀  DONE                                       Done log
  😬  VERBOSE:                                   Verbose log
  🕐  [Sun Mar 25 2018 11:33:18 GMT+1100 (AEDT)] Time log
