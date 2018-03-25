@@ -5,7 +5,7 @@
  **************************************************************************************************************************************************************/
 
 
-const Style = require('../index.js').__test__.Style;
+const Style = require('../index.js').Style;
 
 
 test('Style.parse - undefined argument should return empty string', () => {

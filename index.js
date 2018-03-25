@@ -164,6 +164,16 @@ const InsertVars = ( text /*: string */, vars /*: array */ = [] ) /*: string */ 
 
 
 /**
+ * Render a flag by removing ansi code an replacing magic strings
+ *
+ * @param  {string} flag - The flag string unrendered
+ *
+ * @return {string}      - The flag string stripped of all ansi and replaced with magic
+ */
+const RenderedFlag = ( flag ) => flag.replace( /#timestamp#/g, new Date().toString() );
+
+
+/**
  * Calculate the largest flag size
  *
  * @param  {object} flags - An object of all flag messages
@@ -172,7 +182,7 @@ const InsertVars = ( text /*: string */, vars /*: array */ = [] ) /*: string */ 
  */
 const LargestFlag = ( flags /*: object */ = Log.flags ) /*: integer */ => Object.keys( flags )
 	.filter( item => !Log.disableIndent.includes( item ) )
-	.map( item => flags[ item ] )
+	.map( item => Style.strip( RenderedFlag( flags[ item ] ) ) )
 	.reduce( ( a, b ) => a.length > b.length ? a : b )
 	.length;
 
@@ -203,10 +213,10 @@ const IndentNewLines = ( text /*: string */, type /*: string */, maxWidth /*: in
 				return line
 					.split(' ')                // now we look at each word
 					.map( word => {            // and see what length it is minus ansi codes
-						width += Style.strip( word ).length + 1;
+						width += Style.strip( RenderedFlag( word ) ).length + 1;
 
 						if( width > maxWidth ) { // if we find a word will not fit
-							width = largestFlag + Style.strip( word ).length + 1;
+							width = largestFlag + Style.strip( RenderedFlag( word ) ).length + 1;
 							                       // we add a new line and push the word onto that next line
 							return `\n${ shoulder }${ word }`;
 						}
@@ -229,9 +239,9 @@ const IndentNewLines = ( text /*: string */, type /*: string */, maxWidth /*: in
  *
  * @return {string}        - The shoulder message
  */
-const Shoulder = ( type /*: string */, flags /*: object */ = Log.flags ) /*: string */ => `${ flags[ type ] }${ ' '.repeat(
-		LargestFlag( flags ) - flags[ type ].length > 0
-			? LargestFlag( flags ) - flags[ type ].length
+const Shoulder = ( type /*: string */, flags /*: object */ = Log.flags ) /*: string */ => `${ RenderedFlag( flags[ type ] ) }${ ' '.repeat(
+		LargestFlag( flags ) - Style.strip( RenderedFlag( flags[ type ] ) ).length > 0
+			? LargestFlag( flags ) - Style.strip( RenderedFlag( flags[ type ] ) ).length
 			: 0
 	) }`;
 
@@ -261,11 +271,17 @@ const Filter = ( text /*: string */, filter /*: string */ = Log.verboseFilter ) 
  * @return {string}      - The formated message with vars and indentation
  */
 const Output = ( type /*: string */, text /*: string */, vars /*: array */ ) /*: string */ => {
-	const shoulder = Shoulder( type ).replace( /#timestamp#/g, new Date().toString() );
-	const linebreak = Log.disableIndent.includes( type ) ? '\n' : '';
-	const message = IndentNewLines( InsertVars( text, vars ), type );
+	if( typeof Log.flags[ type ] === 'undefined' ) {
+		Log.error( `Type was not recognized. Can only be one of:\n#`, Object.keys( Log.flags ) );
+		process.exit( 1 );
+	}
+	else {
+		const shoulder = Shoulder( type );
+		const linebreak = Log.disableIndent.includes( type ) ? '\n' : '';
+		const message = IndentNewLines( InsertVars( text, vars ), type );
 
-	return `${ shoulder }${ linebreak }${ message }`;
+		return `${ shoulder }${ linebreak }${ message }`;
+	}
 };
 
 
@@ -288,8 +304,8 @@ const Log = {
 		info: ` 🔔  INFO: `,
 		ok: ` 👍  `,
 		done: ` 🚀  DONE `,
-		time: `[${ Style.bold('#timestamp#') }]`,
-		verbose: ` 😬  `,
+		time: ` 🕐  [${ Style.bold('#timestamp#') }] `,
+		verbose: ` 😬  VERBOSE: `,
 	},
 
 	/**
@@ -311,15 +327,17 @@ const Log = {
 		}
 	},
 
+	Style,
+	Output,
+
 	__test__: {
 		Size,
-		Style,
 		InsertVars,
+		RenderedFlag,
 		LargestFlag,
 		IndentNewLines,
 		Shoulder,
 		Filter,
-		Output,
 	}
 };
 

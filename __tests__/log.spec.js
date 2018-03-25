@@ -6,7 +6,7 @@
 
 
 const Log = require('../index.js');
-const Style = Log.__test__.Style;
+const Style = Log.Style;
 
 
 test('Log.[type] - should begin with the right flag', () => {

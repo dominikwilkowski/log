@@ -24,9 +24,13 @@ test(`IndentNewLines - should return if this type has had it’s indentation dis
 
 
 test(`IndentNewLines - should indent newlines appropriately`, () => {
+	Log.flags = {
+		thing: 'xx: ',
+		thang: 'xxx: ',
+	};
 	Log.disableIndent = [''];
 	const shoulder = ' '.repeat( LargestFlag() - 1 );
 
-	expect( IndentNewLines( 'nothing to do here', 'thing', 30 ) ).toEqual( `nothing \n${ shoulder }to do \n${ shoulder }here` );
-	expect( IndentNewLines( 'nothing to\ndo here', 'thing', 30 ) ).toEqual( `nothing \n${ shoulder }to\n${ shoulder }do here` );
+	expect( IndentNewLines( 'nothing to do here', 'thing', 13 ) ).toEqual( `nothing \n${ shoulder }to do \n${ shoulder }here` );
+	expect( IndentNewLines( 'nothing to\ndo here', 'thing', 13 ) ).toEqual( `nothing \n${ shoulder }to\n${ shoulder }do here` );
 });

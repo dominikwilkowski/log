@@ -7,7 +7,7 @@
 
 const Log = require('../index.js');
 const InsertVars = Log.__test__.InsertVars;
-const Style = Log.__test__.Style;
+const Style = Log.Style;
 
 
 test('InsertVars - should return a message', () => {

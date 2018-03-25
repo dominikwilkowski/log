@@ -28,7 +28,6 @@ Log.verbose('verbose');
 
 console.log('------------');
 
-
 Log.info('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do # eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
 	' Ut enim ad minim veniam, quis nostrud exercitation\nullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in' +
 	' reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in ' +
@@ -62,3 +61,24 @@ Log.verbose('dontshow');
 
 Log.verboseFilter = '';
 Log.verbose('doshow');
+
+console.log('------------');
+
+
+Log.flags.monkey = ' 🐒  monkey business: ';
+
+Log.monkey = ( text, ...vars ) => console.log( Log.Style.magenta( Log.Output( 'monkey', text, vars ) ) ),
+
+Log.monkey('Hey hey!!!');
+
+console.log('------------');
+
+Log.disableIndent = [];
+
+Log.banner('banner');
+Log.error('error');
+Log.info('info');
+Log.ok('ok');
+Log.done('done');
+Log.time('time');
+Log.verbose('verbose');
