@@ -22,7 +22,7 @@ test('InsertVars - should insert vars correctly', () => {
 
 test('InsertVars - should insert overflow vars at the end', () => {
 	expect( InsertVars( 'message # end', [ 'var', 'foo', 'bar' ] ) )
-		.toBe(`message ${ Style.yellow('"var"') } end ${ Style.yellow('"foo"') },${ Style.yellow('"bar"') }`);
+		.toBe(`message ${ Style.yellow('"var"') } end ${ Style.yellow('"foo"') }, ${ Style.yellow('"bar"') }`);
 });
 
 
