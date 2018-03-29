@@ -11,8 +11,8 @@
 'use strict';
 
 
-const TTY = require('tty');
-const OS = require('os');
+const TTY /*: function */ = require('tty');
+const OS /*: function */ = require('os');
 
 
 /**
@@ -21,9 +21,9 @@ const OS = require('os');
  *
  * @return {object} - An object with width and height
  */
-const Size = () => {
-	let width;
-	let height;
+const Size /*: function */ = () /*: object */ => {
+	let width /*: number */;
+	let height /*: number */;
 
 	if( TTY.isatty( 1 ) ) {
 		if( process.stdout.getWindowSize ) {
@@ -40,26 +40,26 @@ const Size = () => {
 		}
 	}
 	else if( OS.release().startsWith('10') ) {
-		const numberPattern = /\d+/g;
-		const cmd = 'wmic path Win32_VideoController get CurrentHorizontalResolution,CurrentVerticalResolution';
-		const code = Spawn.execSync( cmd ).toString('utf8');
-		const res = code.match( numberPattern );
+		const numberPattern /*: object */ = /\d+/g;
+		const cmd /*: string */ = 'wmic path Win32_VideoController get CurrentHorizontalResolution,CurrentVerticalResolution';
+		const code /*: string */ = Spawn.execSync( cmd ).toString('utf8');
+		const res /*: array */ = code.match( numberPattern );
 
 		return {
-			height: ~~res[ 1 ],
-			width: ~~res[ 0 ],
+			height /*: number */: ~~res[ 1 ],
+			width /*: number */: ~~res[ 0 ],
 		};
 	}
 	else {
 		return {
-			height: undefined,
-			width: undefined,
+			height /*: void */: undefined,
+			width /*: void */: undefined,
 		};
 	}
 
 	return {
-		height: height || 0,
-		width: width || 0,
+		height /*: number */: height || 0,
+		width /*: number */: width || 0,
 	};
 };
 
@@ -70,7 +70,7 @@ const Size = () => {
  *
  * @type {Object}
  */
-const Style = {
+const Style /*: object */ = {
 
 	/**
 	 * Parse ansi code while making sure we can nest colors
@@ -83,7 +83,7 @@ const Style = {
 	 */
 	parse: ( text /*: string */, start /*: string */, end /*: string */ = `39m` ) /*: string */ => {
 		if( text !== undefined ) {
-			const replace = new RegExp( `\\u001b\\[${ end }`, 'g' ); // find any resets so we can nest styles
+			const replace /*: object */ = new RegExp( `\\u001b\\[${ end }`, 'g' ); // find any resets so we can nest styles
 
 			return `\u001B[${ start }${ text.toString().replace( replace, `\u001B[${ start }` ) }\u001b[${ end }`;
 		}
@@ -99,12 +99,12 @@ const Style = {
 	 *
 	 * @return {string}      - The cleand text
 	 */
-	strip: ( text /*: string*/ ) /*: string */=> {
-		const pattern = [
+	strip: ( text /*: string*/ ) /*: string */ => {
+		const pattern /*: string */ = [
 			'[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]*(?:;[a-zA-Z\\d]*)*)?\\u0007)',
 			'(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PRZcf-ntqry=><~]))'
 		].join('|');
-		const ansi = new RegExp(pattern, 'g');
+		const ansi /*: object */ = new RegExp(pattern, 'g');
 
 		if( typeof text === 'string' ) {
 			return text.replace( ansi, '' );
@@ -143,13 +143,13 @@ const Style = {
  *
  * @return {string}      - The message with infused vars
  */
-const InsertVars = ( text /*: string */, vars /*: array */ = [] ) /*: string */ => {
-	const message = Style.strip( text );
-	const occurences = ( message.match(/#/g) || [] ).length;
+const InsertVars /*: function */ = ( text /*: string */, vars /*: array */ = [] ) /*: string */ => {
+	const message /*: string */ = Style.strip( text );
+	const occurences /*: number */ = ( message.match(/#/g) || [] ).length;
 
 	return message
 		.split('#')
-		.map( ( item, i ) =>
+		.map( ( item, i ) /*: string */ =>
 			vars[ i ] !== undefined && i !== occurences
 				? item + Style.yellow( JSON.stringify( vars[ i ], null, Log.pretty ? ' ' : null ) )
 				: item + '#'
@@ -157,7 +157,7 @@ const InsertVars = ( text /*: string */, vars /*: array */ = [] ) /*: string */ 
 		.join('')
 		.slice( 0, -1 )
 		.concat( occurences < vars.length
-			? ` ${ vars.slice( occurences ).map( item => Style.yellow( JSON.stringify( item ) ) ) }`
+			? ` ${ vars.slice( occurences ).map( item /*: string */ => Style.yellow( JSON.stringify( item ) ) ) }`
 			: ''
 		);
 };
@@ -170,7 +170,7 @@ const InsertVars = ( text /*: string */, vars /*: array */ = [] ) /*: string */ 
  *
  * @return {string}      - The flag string stripped of all ansi and replaced with magic
  */
-const RenderedFlag = ( flag ) => flag.replace( /#timestamp#/g, new Date().toString() );
+const RenderedFlag /*: function */ = ( flag /*: string */ ) /*: string */ => flag.replace( /#timestamp#/g, new Date().toString() );
 
 
 /**
@@ -180,10 +180,10 @@ const RenderedFlag = ( flag ) => flag.replace( /#timestamp#/g, new Date().toStri
  *
  * @return {integer}      - The size of the largest flag
  */
-const LargestFlag = ( flags /*: object */ = Log.flags ) /*: integer */ => Object.keys( flags )
-	.filter( item => !Log.disableIndent.includes( item ) )
-	.map( item => Style.strip( RenderedFlag( flags[ item ] ) ) )
-	.reduce( ( a, b ) => a.length > b.length ? a : b )
+const LargestFlag /*: function */ = ( flags /*: object */ = Log.flags ) /*: integer */ => Object.keys( flags )
+	.filter( item /*: boolean */ => !Log.disableIndent.includes( item ) )
+	.map( item /*: string */ => Style.strip( RenderedFlag( flags[ item ] ) ) )
+	.reduce( ( a, b ) /*: string */ => a.length > b.length ? a : b )
 	.length;
 
 
@@ -196,23 +196,23 @@ const LargestFlag = ( flags /*: object */ = Log.flags ) /*: integer */ => Object
  *
  * @return {string}           - The message nicely indented
  */
-const IndentNewLines = ( text /*: string */, type /*: string */, maxWidth /*: integer */ = Size().width ) /*: string */ => {
+const IndentNewLines /*: function */ = ( text /*: string */, type /*: string */, maxWidth /*: integer */ = Size().width ) /*: string */ => {
 	if( Log.disableIndent.includes( type ) || typeof text !== 'string' ) {
 		return text;
 	}
 	else {
-		const largestFlag = LargestFlag();
-		const shoulder = ' '.repeat( largestFlag - 1 );
+		const largestFlag /*: number */ = LargestFlag();
+		const shoulder /*: string */ = ' '.repeat( largestFlag - 1 );
 
 		return text
 			.replace( /\r?\n|\r/g, '\n' )  // first we clean messy line breaks
 			.split('\n')                   // then we take each line
-			.map( line => {
-				let width = largestFlag;     // and start with the default shoulder
+			.map( line /*: string */ => {
+				let width /*: number */ = largestFlag;     // and start with the default shoulder
 
 				return line
 					.split(' ')                // now we look at each word
-					.map( word => {            // and see what length it is minus ansi codes
+					.map( word /*: string */ => {            // and see what length it is minus ansi codes
 						width += Style.strip( RenderedFlag( word ) ).length + 1;
 
 						if( width > maxWidth ) { // if we find a word will not fit
@@ -239,7 +239,7 @@ const IndentNewLines = ( text /*: string */, type /*: string */, maxWidth /*: in
  *
  * @return {string}        - The shoulder message
  */
-const Shoulder = ( type /*: string */, flags /*: object */ = Log.flags ) /*: string */ => `${ RenderedFlag( flags[ type ] ) }${ ' '.repeat(
+const Shoulder /*: function */ = ( type /*: string */, flags /*: object */ = Log.flags ) /*: string */ => `${ RenderedFlag( flags[ type ] ) }${ ' '.repeat(
 		LargestFlag( flags ) - Style.strip( RenderedFlag( flags[ type ] ) ).length > 0
 			? LargestFlag( flags ) - Style.strip( RenderedFlag( flags[ type ] ) ).length
 			: 0
@@ -254,8 +254,8 @@ const Shoulder = ( type /*: string */, flags /*: object */ = Log.flags ) /*: str
  *
  * @return {boolean}       - Whether or not to show this message depending on the filter
  */
-const Filter = ( text /*: string */, filter /*: string */ = Log.verboseFilter ) /*: boolean */ => {
-	const re = new RegExp( filter, 'g' );
+const Filter /*: function */ = ( text /*: string */, filter /*: string */ = Log.verboseFilter ) /*: boolean */ => {
+	const re /*: object */ = new RegExp( filter, 'g' );
 
 	return text.match( re );
 };
@@ -271,7 +271,7 @@ const Filter = ( text /*: string */, filter /*: string */ = Log.verboseFilter ) 
  *
  * @return {string}           - The formated message with vars and indentation
  */
-const Output = ( type /*: string */, text /*: string */, vars /*: array */, maxWidth /*: integer */ = Size().width ) /*: string */ => {
+const Output /*: function */ = ( type /*: string */, text /*: string */, vars /*: array */, maxWidth /*: integer */ = Size().width ) /*: string */ => {
 	if( typeof Log.flags[ type ] === 'undefined' ) {
 		console.error(
 			Style.red(`Error: Type ${ Style.yellow( type ) } was not recognized. Can only be one of:\n${ Style.yellow( [ 'hr', ...Object.keys( Log.flags ) ] ) }`)
@@ -279,9 +279,9 @@ const Output = ( type /*: string */, text /*: string */, vars /*: array */, maxW
 		return void( 0 );
 	}
 	else {
-		const shoulder = Shoulder( type );
-		const linebreak = Log.disableIndent.includes( type ) ? '\n' : '';
-		const message = IndentNewLines( InsertVars( text, vars ), type, maxWidth );
+		const shoulder /*: string */ = Shoulder( type );
+		const linebreak /*: string */ = Log.disableIndent.includes( type ) ? '\n' : '';
+		const message /*: string */ = IndentNewLines( InsertVars( text, vars ), type, maxWidth );
 
 		return `${ shoulder }${ linebreak }${ message }`;
 	}
@@ -293,22 +293,22 @@ const Output = ( type /*: string */, text /*: string */, vars /*: array */, maxW
  *
  * @type {Object}
  */
-const Log = {
+const Log /*: object */ = {
 	/**
 	 * Settings
 	 */
-	verboseMode: false,        // verbose flag
-	verboseFilter: '',         // verbose filter
-	disableIndent: [ 'time' ], // disable indentation for new lines
-	pretty: false,             // enable pretty printing variables
-	flags: {                   // all flag messages
-		banner: ` 📣  `,
-		error: ` 🔥  ERROR: `,
-		info: ` 🔔  INFO: `,
-		ok: ` 👍  `,
-		done: ` 🚀  DONE: `,
-		time: ` 🕐  [${ Style.bold('#timestamp#') }] `,
-		verbose: ` 😬  VERBOSE: `,
+	verboseMode /*: boolean */: false,      // verbose flag
+	verboseFilter /*: string */: '',        // verbose filter
+	disableIndent /*: array */: [ 'time' ], // disable indentation for new lines
+	pretty /*: boolean */: false,           // enable pretty printing variables
+	flags /*: object */: {                  // all flag messages
+		banner /*: string */: ` 📣  `,
+		error /*: string */: ` 🔥  ERROR: `,
+		info /*: string */: ` 🔔  INFO: `,
+		ok /*: string */: ` 👍  `,
+		done /*: string */: ` 🚀  DONE: `,
+		time /*: string */: ` 🕐  [${ Style.bold('#timestamp#') }] `,
+		verbose /*: string */: ` 😬  VERBOSE: `,
 	},
 
 	/**
@@ -322,10 +322,9 @@ const Log = {
 	ok:      ( text /*: string */, ...vars ) /*: void */ => console.log( Style.green( Output( 'ok', text, vars ) ) ),
 	done:    ( text /*: string */, ...vars ) /*: void */ => console.log( Style.green( Output( 'done', text, vars ) ) ),
 	time:    ( text /*: string */, ...vars ) /*: void */ => console.log( Output( 'time', text, vars ) ),
-	hr:      ( maxWidth /*: integer */ = Size().width ) /*: void */ =>
-		console.log(`\n ${ Style.gray( '═'.repeat( maxWidth > 1 ? maxWidth - 2 : 0 ) ) } \n`),
+	hr:      ( maxWidth /*: integer */ = Size().width ) /*: void */ => console.log(`\n ${ Style.gray( '═'.repeat( maxWidth > 1 ? maxWidth - 2 : 0 ) ) } \n`),
 	verbose: ( text /*: string */, ...vars ) /*: void */ => {
-		const output = Output( 'verbose', text, vars );
+		const output /*: string */ = Output( 'verbose', text, vars );
 
 		if( Filter( output ) && Log.verboseMode ) {
 			console.log( output );

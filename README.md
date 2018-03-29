@@ -318,6 +318,7 @@ There is also a `npm run test:watch` script that can be used while developing.
 
 ## Release History
 
+* v0.2.0  - added flow type tests
 * v0.1.0  - 💥 Initial version
 
 
