@@ -1,7 +1,7 @@
 {
 	"name": "indent-log",
 	"description": "No dependency better logging for your node app",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"author": {
 		"name": "Dominik Wilkowski",
 		"email": "Hi@Dominik-Wilkowski.com",

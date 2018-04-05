@@ -64,6 +64,12 @@ Log.verbose('doshow');
 
 Log.hr();
 
+Log.callbacks.info = ( text ) => {
+	console.log('callback: '+Log.Style.green(text));
+};
+Log.info('info');
+
+Log.hr();
 
 Log.flags.monkey = ' 🐒  monkey business: ';
 
