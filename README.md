@@ -101,6 +101,17 @@ Log.info('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm
 This can be disabled in the [`disableIndent`](#disableindent) setting.
 
 
+### Callbacks
+
+You can register a callback for one or more log types.
+
+```js
+Log.callbacks.error = ( text, vars, type ) => DoSomething( text, vars, type );
+```
+
+Now every time you call `Log.error` the `DoSomething` function will also be run. This can be useful for error logging, notifications etc.
+
+
 **[⬆ back to top](#contents)**
 
 
@@ -247,6 +258,7 @@ incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostr
 exercitation.
 ```
 
+
 ### `pretty`
 _(boolean)_  
 default: `false`
@@ -274,6 +286,7 @@ Disabled:
            }
 ```
 
+
 ### `flags`
 _(object)_
 
@@ -298,6 +311,33 @@ the length of a string that contains emojis is difficult and would warrant a dep
 I am trying to keep this package dependency free though.
 
 
+### `callbacks`
+_(object)_
+
+The callbacks are a collection of functions for each log. The defaults are empty:
+
+```js
+Log.callbacks = {
+	banner: void( 0 ),
+	error: void( 0 ),
+	info: void( 0 ),
+	ok: void( 0 ),
+	done: void( 0 ),
+	time: void( 0 ),
+	hr: void( 0 ),
+	verbose: void( 0 ),
+};
+```
+
+If you want the error log eg to do something special every time it’s run, this is where you can do that. Each function has the following parameter passed to it:
+
+```
+@param  {string} text - The message
+@param  {array}  vars - All variables passed to the message
+@param  {string} type - The type of message
+```
+
+
 **[⬆ back to top](#contents)**
 
 
@@ -318,8 +358,9 @@ There is also a `npm run test:watch` script that can be used while developing.
 
 ## Release History
 
-* v0.2.0  - added flow type tests
-* v0.1.0  - 💥 Initial version
+* v0.3.0 - added callbacks
+* v0.2.0 - added flow type tests
+* v0.1.0 - 💥 Initial version
 
 
 **[⬆ back to top](#contents)**

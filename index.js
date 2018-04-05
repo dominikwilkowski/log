@@ -31,6 +31,12 @@ type flags = {
 }
 */
 
+/*::
+type callbacks = {
+	[string]: function,
+}
+*/
+
 
 /**
  * Get the size of the cli window
@@ -313,6 +319,21 @@ const Output /*: function */ = ( type /*: string */, text /*: string */, vars /*
 
 
 /**
+ * Run a callback if it exists for a type
+ *
+ * @param  {object} callbacks - An object of all callbacks, keyed by type
+ * @param  {string} type      - The type of message
+ * @param  {string} text      - The message
+ * @param  {array}  vars      - All variables passed to the message
+ */
+const Callback /*: function */ = ( callbacks /*: callbacks */, type /*: string */, text /*: string */, vars /*: Array<any> */ ) /*: void */ => {
+	if( typeof callbacks[ type ] === 'function' ) {
+		callbacks[ type ]( text, vars, type );
+	}
+};
+
+
+/**
  * A logging object
  *
  * @type {Object}
@@ -321,11 +342,11 @@ const Log = {
 	/**
 	 * Settings
 	 */
-	verboseMode: false,      // verbose flag
-	verboseFilter: '',        // verbose filter
+	verboseMode: false,        // verbose flag
+	verboseFilter: '',         // verbose filter
 	disableIndent: [ 'time' ], // disable indentation for new lines
-	pretty: false,           // enable pretty printing variables
-	flags: {                  // all flag messages
+	pretty: false,             // enable pretty printing variables
+	flags: {                   // all flag messages
 		banner: ` 📣  `,
 		error: ` 🔥  ERROR: `,
 		info: ` 🔔  INFO: `,
@@ -334,24 +355,57 @@ const Log = {
 		time: ` 🕐  [${ Style.bold('#timestamp#') }] `,
 		verbose: ` 😬  VERBOSE: `,
 	},
+	callbacks: {               // a collection of callbacks for each log
+		banner: void( 0 ),
+		error: void( 0 ),
+		info: void( 0 ),
+		ok: void( 0 ),
+		done: void( 0 ),
+		time: void( 0 ),
+		hr: void( 0 ),
+		verbose: void( 0 ),
+	},
 
 	/**
 	 * Log calls
 	 *
 	 * @param  {string} text - The message you want to log
 	 */
-	banner:  ( text /*: string */, ...vars /*: any */ ) /*: void */ => console.log( Output( 'banner', text, vars ) ),
-	error:   ( text /*: string */, ...vars /*: any */ ) /*: void */ => console.error( Style.red( Output( 'error', text, vars ) ) ),
-	info:    ( text /*: string */, ...vars /*: any */ ) /*: void */ => console.info( Output( 'info', text, vars ) ),
-	ok:      ( text /*: string */, ...vars /*: any */ ) /*: void */ => console.log( Style.green( Output( 'ok', text, vars ) ) ),
-	done:    ( text /*: string */, ...vars /*: any */ ) /*: void */ => console.log( Style.green( Output( 'done', text, vars ) ) ),
-	time:    ( text /*: string */, ...vars /*: any */ ) /*: void */ => console.log( Output( 'time', text, vars ) ),
-	hr:      ( maxWidth /*: number */ = Size().width ) /*: void */ => console.log(`\n ${ Style.gray( '═'.repeat( maxWidth > 1 ? maxWidth - 2 : 0 ) ) } \n`),
+	banner: ( text /*: string */, ...vars /*: any */ ) /*: void */ => {
+		console.log( Output( 'banner', text, vars ) );
+		Callback( Log.callbacks, 'banner', text, vars );
+	},
+	error: ( text /*: string */, ...vars /*: any */ ) /*: void */ => {
+		console.error( Style.red( Output( 'error', text, vars ) ) );
+		Callback( Log.callbacks, 'error', text, vars );
+	},
+	info: ( text /*: string */, ...vars /*: any */ ) /*: void */ => {
+		console.info( Output( 'info', text, vars ) );
+		Callback( Log.callbacks, 'info', text, vars );
+	},
+	ok: ( text /*: string */, ...vars /*: any */ ) /*: void */ => {
+		console.log( Style.green( Output( 'ok', text, vars ) ) );
+		Callback( Log.callbacks, 'ok', text, vars );
+	},
+	done: ( text /*: string */, ...vars /*: any */ ) /*: void */ => {
+		console.log( Style.green( Output( 'done', text, vars ) ) );
+		Callback( Log.callbacks, 'done', text, vars );
+	},
+	time: ( text /*: string */, ...vars /*: any */ ) /*: void */ => {
+		console.log( Output( 'time', text, vars ) );
+		Callback( Log.callbacks, 'time', text, vars );
+	},
+	hr: ( maxWidth /*: number */ = Size().width ) /*: void */ => {
+		console.log(`\n ${ Style.gray( '═'.repeat( maxWidth > 1 ? maxWidth - 2 : 0 ) ) } \n`);
+		Callback( Log.callbacks, 'hr', '', [] );
+	},
 	verbose: ( text /*: string */, ...vars /*: any */ ) /*: void */ => {
 		const output /*: string */ = Output( 'verbose', text, vars );
 
 		if( Filter( output ) && Log.verboseMode ) {
 			console.log( output );
+
+			Callback( Log.callbacks, 'verbose', text, vars );
 		}
 	},
 
@@ -366,6 +420,7 @@ const Log = {
 		IndentNewLines,
 		Shoulder,
 		Filter,
+		Callback,
 	}
 };
 
