@@ -40,8 +40,8 @@
 	},
 	"dependencies": {},
 	"devDependencies": {
-		"flow-bin": "^0.69.0",
-		"jest-cli": "^22.4.3"
+		"flow-bin": "^0.82.0",
+		"jest-cli": "^23.6.0"
 	},
 	"jest": {
 		"testEnvironment": "node",
