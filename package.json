@@ -1,7 +1,7 @@
 {
 	"name": "indent-log",
 	"description": "No dependency better logging for your node app",
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"author": {
 		"name": "Dominik Wilkowski",
 		"email": "Hi@Dominik-Wilkowski.com",
@@ -36,12 +36,13 @@
 		"test:unit": "jest",
 		"test:type": "flow check",
 		"test": "npm run test:type && npm run test:unit",
-		"coverage": "flow coverage index.js --color"
+		"coverage": "flow coverage index.js --color",
+		"nuke": "rm -rf node_modules && rm yarn.lock"
 	},
 	"dependencies": {},
 	"devDependencies": {
-		"flow-bin": "^0.82.0",
-		"jest-cli": "^23.6.0"
+		"flow-bin": "^0.103.0",
+		"jest-cli": "^24.8.0"
 	},
 	"jest": {
 		"testEnvironment": "node",
