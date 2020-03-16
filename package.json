@@ -1,7 +1,7 @@
 {
 	"name": "indent-log",
 	"description": "No dependency better logging for your node app",
-	"version": "0.3.3",
+	"version": "0.3.4",
 	"author": {
 		"name": "Dominik Wilkowski",
 		"email": "Hi@Dominik-Wilkowski.com",
@@ -41,8 +41,8 @@
 	},
 	"dependencies": {},
 	"devDependencies": {
-		"flow-bin": "^0.114.0",
-		"jest-cli": "^24.9.0"
+		"flow-bin": "^0.120.1",
+		"jest-cli": "^25.1.0"
 	},
 	"jest": {
 		"testEnvironment": "node",
