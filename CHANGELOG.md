@@ -4,6 +4,7 @@ LOG
 
 ## Versions
 
+* [v0.3.5 - updated dependencies](v035)
 * [v0.3.4 - updated dependencies](v034)
 * [v0.3.3 - updated dependencies](v033)
 * [v0.3.2 - updated dependencies](v032)
@@ -17,6 +18,11 @@ LOG
 
 
 ## Release History
+
+### v0.3.5
+
+- updated dependencies
+
 
 ### v0.3.4
 
