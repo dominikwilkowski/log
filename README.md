@@ -1,9 +1,9 @@
-LOG [![Build Status](https://travis-ci.org/dominikwilkowski/log.svg?branch=master)](https://travis-ci.org/dominikwilkowski/log)
+LOG [![Build Status](https://travis-ci.org/dominikwilkowski/log.svg?branch=released)](https://travis-ci.org/dominikwilkowski/log)
 ===
 
 > No dependency better logging for your node app
 
-![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/master/assets/log.png)
+![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/released/assets/log.png)
 
 
 ## Contents
@@ -61,7 +61,7 @@ Log.hr();
 Log.time('Time log');
 ```
 
-![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/master/assets/log7.png)
+![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/released/assets/log7.png)
 
 `Log.hr()` will output a line that will fill the terminal and a line break before and after.
 
@@ -79,7 +79,7 @@ Log.info( 'running function in folder # to find #', 'folder' );
 Log.info( 'running function in folder # to find #', 'folder', 'needle', 42, [ 'one', 'two' ] );
 ```
 
-![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/master/assets/log2.png)
+![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/released/assets/log2.png)
 
 All variables are colored yellow to make reading easier.
 
@@ -96,7 +96,7 @@ Log.info('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm
 'culpa qui officia deserunt mollit anim id est laborum.');
 ```
 
-![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/master/assets/log3.png)
+![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/released/assets/log3.png)
 
 This can be disabled in the [`disableIndent`](#disableindent) setting.
 
@@ -131,7 +131,7 @@ Log.banner('Monkey business starting now!');
 Log.monkey('Hey hey!!!');
 ```
 
-![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/master/assets/log4.png)
+![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/released/assets/log4.png)
 
 Registering a new flag will now ensure all other flags are indented to the largest flag unless it is disabled via the [`disableIndent`](#disableindent) setting.
 
@@ -225,7 +225,7 @@ Log.verbose('Verbose log');
 Log.time('Time log');
 ```
 
-![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/master/assets/log5.png)
+![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/released/assets/log5.png)
 
 This is what it would look like if you enabled all indentation and included `time`:
 
@@ -241,7 +241,7 @@ Log.verbose('Verbose log');
 Log.time('Time log');
 ```
 
-![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/master/assets/log6.png)
+![Log output](https://raw.githubusercontent.com/dominikwilkowski/log/released/assets/log6.png)
 
 Enabled:
 ```
@@ -358,7 +358,7 @@ There is also a `npm run test:watch` script that can be used while developing.
 
 ## Release History
 
-See [CHANGELOG](https://raw.githubusercontent.com/dominikwilkowski/log/master/CHANGELOG.md).
+See [CHANGELOG](https://raw.githubusercontent.com/dominikwilkowski/log/released/CHANGELOG.md).
 
 
 **[⬆ back to top](#contents)**
@@ -370,7 +370,7 @@ See [CHANGELOG](https://raw.githubusercontent.com/dominikwilkowski/log/master/CH
 ## License
 
 Copyright (c) Dominik Wilkowski.
-Licensed under [GNU-GPLv3](https://raw.githubusercontent.com/dominikwilkowski/log/master/LICENSE).
+Licensed under [GNU-GPLv3](https://raw.githubusercontent.com/dominikwilkowski/log/released/LICENSE).
 
 
 **[⬆ back to top](#contents)**

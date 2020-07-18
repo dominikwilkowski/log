@@ -4,7 +4,7 @@ LOG
 
 ## Versions
 
-* [v0.3.5 - updated dependencies](v035)
+* [v0.3.5 - updated dependencies, deprecated Node 6 and 8 support](v035)
 * [v0.3.4 - updated dependencies](v034)
 * [v0.3.3 - updated dependencies](v033)
 * [v0.3.2 - updated dependencies](v032)
@@ -22,6 +22,7 @@ LOG
 ### v0.3.5
 
 - updated dependencies
+- deprecated Node 6 and 8 support
 
 
 ### v0.3.4

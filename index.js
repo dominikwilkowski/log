@@ -4,7 +4,7 @@
  *
  * @repo    - https://github.com/dominikwilkowski/log
  * @author  - Dominik Wilkowski
- * @license - https://raw.githubusercontent.com/dominikwilkowski/log/master/LICENSE (GPL-3.0)
+ * @license - https://raw.githubusercontent.com/dominikwilkowski/log/released/LICENSE (GPL-3.0)
  *
  * @flow
  **************************************************************************************************************************************************************/
