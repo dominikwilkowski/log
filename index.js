@@ -428,4 +428,5 @@ const Log = {
 /**
  * EXPORT
  */
+// $FlowFixMe
 module.exports = exports = Log;
